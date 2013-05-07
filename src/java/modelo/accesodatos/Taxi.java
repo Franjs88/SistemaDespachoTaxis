@@ -31,6 +31,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Taxi.findAll", query = "SELECT t FROM Taxi t"),
     @NamedQuery(name = "Taxi.findAllByNumBastidor", query = "SELECT t.numBastidor FROM Taxi t"),
     @NamedQuery(name = "Taxi.findByNumBastidor", query = "SELECT t FROM Taxi t WHERE t.numBastidor = :numBastidor"),
+    @NamedQuery(name = "Taxi.findEstadoByNumBastidor", query = "SELECT t.estado FROM Taxi t WHERE t.numBastidor = :numBastidor"),
+    @NamedQuery(name = "Taxi.findUbicacionByNumBastidor", query = "SELECT t.estado FROM Taxi t WHERE t.numBastidor = :numBastidor"),
+    @NamedQuery(name = "Taxi.findDestinoByNumBastidor", query = "SELECT t.estado FROM Taxi t WHERE t.numBastidor = :numBastidor"),
     @NamedQuery(name = "Taxi.findByEstado", query = "SELECT t FROM Taxi t WHERE t.estado = :estado"),
     @NamedQuery(name = "Taxi.findByUbicacion", query = "SELECT t FROM Taxi t WHERE t.ubicacion = :ubicacion"),
     @NamedQuery(name = "Taxi.findByDestino", query = "SELECT t FROM Taxi t WHERE t.destino = :destino")})

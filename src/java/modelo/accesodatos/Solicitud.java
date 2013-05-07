@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Solicitud.findByNombreCliente", query = "SELECT s FROM Solicitud s WHERE s.nombreCliente = :nombreCliente"),
     @NamedQuery(name = "Solicitud.findByFechaSolicitud", query = "SELECT s FROM Solicitud s WHERE s.fechaSolicitud = :fechaSolicitud"),
     @NamedQuery(name = "Solicitud.findByDireccionDestino", query = "SELECT s FROM Solicitud s WHERE s.direccionDestino = :direccionDestino"),
-    @NamedQuery(name = "Solicitud.findByTelefono", query = "SELECT s FROM Solicitud s WHERE s.telefono = :telefono")})
+    @NamedQuery(name = "Solicitud.findByTelefono", query = "SELECT s FROM Solicitud s WHERE s.telefono = :telefono"),
+    @NamedQuery(name = "Solicitud.findTaxis", query = "SELECT s.taxiNumBastidor FROM Solicitud s")})
 public class Solicitud implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,7 +45,7 @@ public class Solicitud implements Serializable {
     private String nombreCliente;
     @Size(max = 45)
     @Column(name = "fechaSolicitud")
-    private String fechaSolicitud;
+    private Long fechaSolicitud;
     @Size(max = 45)
     @Column(name = "direccionDestino")
     private String direccionDestino;
@@ -62,6 +63,13 @@ public class Solicitud implements Serializable {
         this.idSolicitud = idSolicitud;
     }
 
+    public Solicitud(String nombreCliente, String direccionDestino, String telefono, long fechaSolicitud) {
+        this.nombreCliente = nombreCliente;
+        this.direccionDestino = direccionDestino;
+        this.telefono = telefono;
+        this.fechaSolicitud = fechaSolicitud;
+    }
+    
     public Integer getIdSolicitud() {
         return idSolicitud;
     }
@@ -78,11 +86,11 @@ public class Solicitud implements Serializable {
         this.nombreCliente = nombreCliente;
     }
 
-    public String getFechaSolicitud() {
+    public long getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(String fechaSolicitud) {
+    public void setFechaSolicitud(long fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
 

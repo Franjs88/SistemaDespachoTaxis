@@ -16,7 +16,7 @@ public interface InterfazFachadaRemota {
     
     public String consultaEstadoTaxi(Integer idTaxi);
     
-    public InfoTaxi consultaInfoTaxi();
+    public InfoTaxi consultaInfoTaxi(Integer idTaxi);
     
     public boolean insertarSolicitud(String nombre, String direccion, String telefono);
     
