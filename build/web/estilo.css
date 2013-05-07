@@ -1,0 +1,82 @@
+#forma{ 
+    position:absolute;
+    top:150px;
+    background-color: gainsboro;
+    font-size: 20px;
+    width: 200px;
+    height: 200px;
+    left: 42%;
+    border-radius: 15px;
+    border:black solid medium;
+    padding:2px;
+}
+h1{
+    text-align:center;
+    font-size: 40px;
+}
+#encabezado{
+    position:absolute;
+    left:0px;
+    top:0px;
+    background-color: #0099FF;
+    height:125px;
+    width:100%;
+}
+#enlaces{
+    position:absolute;
+    top:80px;
+    right:150px;
+    color:white;
+}
+#enlaces ul li{
+    
+    display:inline;
+    list-style-type: none;
+}
+#listataxis{
+    position:absolute;
+    top:126px;
+    left:43%;
+}
+#infotaxi{
+    position:absolute;
+    top:126px;
+    left:0px;
+    width:50%;
+}
+
+a{
+    text-decoration: none;
+}
+a:link{
+    color:white;
+}
+a:visited {
+    color:white;
+}
+a:hover   {
+    color:yellow;
+}
+a:active  {
+    color:yellow;
+}
+#map_canvas {
+     top:160px;
+     left:50%;
+     width:450px;
+     height:450px;
+}
+#taxiOptimo{
+    position:absolute;
+    top:126px;
+    left:0px;
+    text-align: center;
+    width:50%;
+}
+#mensaje{
+    position:absolute;
+    top:200px;
+    left:0px;
+    text-align:center;
+    width:50%;
+}

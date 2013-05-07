@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
-    Created on : 29-abr-2013, 19:11:15
-    Author     : fran
+    Created on : May 5, 2013, 7:58:10 PM
+    Author     : andres
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,9 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Index</title>
+        <script src="funciones.js"></script>
     </head>
-    <body>
-        <h1>Hello World!</h1>
+    <body onload="obtenerTaxis()">
     </body>
 </html>

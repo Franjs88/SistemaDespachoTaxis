@@ -55,6 +55,14 @@ public class FachadaDeSesion implements InterfazFachadaRemota {
         
         ArrayList<Integer> ultimosTaxis = new ArrayList<Integer>();
         Integer idTaxi = null;
+        
+        if (numSolicitudes == 0) {
+            idTaxi = listaTaxis.get(0);
+            for (int i = 0; i < numTaxis; i++) {
+                ultimosTaxis.add(listaTaxis.get(i));
+            }
+        }
+                
         while (numTaxis > 0 && numSolicitudes > 0){
             idTaxi = listaSolicitudes.get(numSolicitudes - 1).getNumBastidor();
             if (!estaEnLista(ultimosTaxis, idTaxi)) {
@@ -62,6 +70,15 @@ public class FachadaDeSesion implements InterfazFachadaRemota {
                 numTaxis--;
             }
            numSolicitudes--;
+        }
+        
+        List<Integer> copiaListaTaxis = listaTaxis;
+        while (ultimosTaxis.size() < listaTaxis.size()) {
+            idTaxi = copiaListaTaxis.get(0);
+            if (!estaEnLista(ultimosTaxis, idTaxi)) {
+                ultimosTaxis.add(idTaxi);
+            }
+            copiaListaTaxis.remove(0);
         }
         
         boolean enviado = enviarMensaje(idSolicitud, idTaxi); 
