@@ -5,6 +5,7 @@
 package modelo.logicanegocio;
 
 import java.util.List;
+import modelo.accesodatos.Taxi;
 
 /**
  *
@@ -16,9 +17,15 @@ public interface InterfazFachadaRemota {
     
     public String consultaEstadoTaxi(Integer idTaxi);
     
-    public InfoTaxi consultaInfoTaxi(Integer idTaxi);
+    public Taxi consultaInfoTaxi(Integer idTaxi);
     
-    public boolean insertarSolicitud(String nombre, String direccion, String telefono);
+    /**
+     *
+     * @param nombre
+     * @param direccion
+     * @param telefono
+     */
+    public Integer insertarSolicitud(String nombre, String direccion, String telefono);
     
     public Integer obtenerTaxi(Integer idSolicitud);
     

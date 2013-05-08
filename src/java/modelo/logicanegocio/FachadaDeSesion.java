@@ -20,7 +20,7 @@ import modelo.accesodatos.Taxi;
 @Stateless
 @LocalBean
 public class FachadaDeSesion implements InterfazFachadaRemota {
-    
+
     @PersistenceContext
     EntityManager em;
 
@@ -31,84 +31,98 @@ public class FachadaDeSesion implements InterfazFachadaRemota {
 
     @Override
     public String consultaEstadoTaxi(Integer idTaxi) {
-        return (String) em.createNamedQuery("Taxi.findEstadoByNumBastidor").setParameter("numBastidor", idTaxi).getResultList().get(0);
+        return (String) em.createNamedQuery("Taxi.findEstadoByNumBastidor").
+                setParameter("numBastidor", idTaxi).getSingleResult();
     }
 
     @Override
-    public InfoTaxi consultaInfoTaxi(Integer idTaxi) {
-        return (new InfoTaxi((String) em.createNamedQuery("Taxi.findEstadoByNumBastidor").setParameter("numBastidor", idTaxi).getResultList().get(0), (String) em.createNamedQuery("Taxi.findUbicacionByNumBastidor").setParameter("numBastidor", idTaxi).getResultList().get(0), idTaxi));
+    public Taxi consultaInfoTaxi(Integer idTaxi) {
+        return (Taxi) em.createNamedQuery("Taxi.findByNumBastidor").
+                setParameter("numBastidor", idTaxi).getSingleResult();
     }
 
     @Override
-    public boolean insertarSolicitud(String nombre, String direccion, String telefono) {
-         Solicitud solicitud = new Solicitud(nombre, direccion, telefono, System.currentTimeMillis());
-         em.persist(solicitud);
-         return true;
+    public Integer insertarSolicitud(String nombre, String direccion, String telefono) {
+        Solicitud solicitud = new Solicitud(nombre, direccion, telefono, System.currentTimeMillis());
+        //solicitud.setIdSolicitud(2);
+        em.persist(solicitud);
+        return solicitud.getIdSolicitud();
     }
 
     @Override
     public Integer obtenerTaxi(Integer idSolicitud) {
         List<Taxi> listaSolicitudes = em.createNamedQuery("Solicitud.findTaxis").getResultList();
+
         int numSolicitudes = listaSolicitudes.size();
+
         List<Integer> listaTaxis = consultaListaTaxis();
         int numTaxis = listaTaxis.size();
-        
-        ArrayList<Integer> ultimosTaxis = new ArrayList<Integer>();
-        Integer idTaxi = null;
-        
+
+        ArrayList<Integer> taxisCandidatos = new ArrayList<Integer>();
+
+        Integer taxiCandidato;
+
         if (numSolicitudes == 0) {
-            idTaxi = listaTaxis.get(0);
+            taxiCandidato = listaTaxis.get(0);
             for (int i = 0; i < numTaxis; i++) {
-                ultimosTaxis.add(listaTaxis.get(i));
+                taxisCandidatos.add(listaTaxis.get(i));
+            }
+        } else {
+            taxisCandidatos = generarCandidatos(numTaxis, listaSolicitudes, taxisCandidatos);
+            taxiCandidato = taxisCandidatos.get(taxisCandidatos.size() - 1);
+
+            List<Integer> copiaListaTaxis = listaTaxis;
+            while (taxisCandidatos.size() < listaTaxis.size()) {
+                taxiCandidato = copiaListaTaxis.get(0);
+                if (!estaEnLista(taxisCandidatos, taxiCandidato)) {
+                    taxisCandidatos.add(taxiCandidato);
+                }
+                copiaListaTaxis.remove(0);
+            }
+
+            boolean enviado = enviarMensaje(idSolicitud, taxiCandidato);
+
+            while (taxisCandidatos.size() > 0 && !enviado) {
+                taxisCandidatos.remove(taxiCandidato);
+                taxiCandidato = taxisCandidatos.get(taxisCandidatos.size() - 1);
+                enviado = enviarMensaje(idSolicitud, taxiCandidato);
             }
         }
-                
-        while (numTaxis > 0 && numSolicitudes > 0){
-            idTaxi = listaSolicitudes.get(numSolicitudes - 1).getNumBastidor();
-            if (!estaEnLista(ultimosTaxis, idTaxi)) {
-                ultimosTaxis.add(idTaxi);
-                numTaxis--;
-            }
-           numSolicitudes--;
-        }
-        
-        List<Integer> copiaListaTaxis = listaTaxis;
-        while (ultimosTaxis.size() < listaTaxis.size()) {
-            idTaxi = copiaListaTaxis.get(0);
-            if (!estaEnLista(ultimosTaxis, idTaxi)) {
-                ultimosTaxis.add(idTaxi);
-            }
-            copiaListaTaxis.remove(0);
-        }
-        
-        boolean enviado = enviarMensaje(idSolicitud, idTaxi); 
-        
-        while (ultimosTaxis.size() > 0 && !enviado) {
-            ultimosTaxis.remove(idTaxi);
-            idTaxi = ultimosTaxis.get(ultimosTaxis.size()-1);
-            enviado = enviarMensaje(idSolicitud, idTaxi);
-        }
-        
-        return idTaxi;
+
+        return taxiCandidato;
     }
 
     @Override
     public boolean enviarMensaje(Integer idSolicitud, Integer idTaxi) {
-        
+
         Solicitud solicitud = (Solicitud) em.createNamedQuery("Solicitud.findByIdSolicitud").setParameter("idSolicitud", idSolicitud).getResultList().get(0);
         Taxi taxi = (Taxi) em.createNamedQuery("Taxi.findByNumBastidor").setParameter("numBastidor", idTaxi).getResultList().get(0);
-        
+
         solicitud.setTaxiNumBastidor(taxi);
 
-        
+
         return true;
     }
-    
-    
-    protected boolean estaEnLista (ArrayList lista, int id) {
+
+    private ArrayList<Integer> generarCandidatos(int numTaxis, List<Taxi> listaSolicitudes, ArrayList<Integer> taxisCandidatos) {
+        int numSolicitudes = listaSolicitudes.size();
+        Integer taxiCandidato;
+
+        while (numTaxis > 0 && numSolicitudes > 0) {
+            taxiCandidato = listaSolicitudes.get(numSolicitudes - 1).getNumBastidor();
+            if (!estaEnLista(taxisCandidatos, taxiCandidato)) {
+                taxisCandidatos.add(taxiCandidato);
+                numTaxis--;
+            }
+            numSolicitudes--;
+        }
+        return taxisCandidatos;
+    }
+
+    private boolean estaEnLista(ArrayList lista, int id) {
         boolean encontrado = false;
-        if (!lista.isEmpty()){
-            for (int i = 0; i < lista.size()-1; i++) {
+        if (!lista.isEmpty()) {
+            for (int i = 0; i < lista.size() - 1; i++) {
                 if (id == lista.get(i)) {
                     encontrado = true;
                 }
@@ -116,5 +130,4 @@ public class FachadaDeSesion implements InterfazFachadaRemota {
         }
         return encontrado;
     }
-
 }
