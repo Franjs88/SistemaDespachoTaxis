@@ -50,7 +50,7 @@ public class ControladorServlet extends HttpServlet {
             out.println(ejb.consultaEstadoTaxi(123));
             out.println(ejb.consultaInfoTaxi(123).getUbicacion());
             out.println(ejb.consultaInfoTaxi(123).getDestino());
-            out.println(ejb.insertarSolicitud("pepe", "parla", "345"));
+            //out.println(ejb.insertarSolicitud("pepe", "parla", "345"));
             out.println(ejb.obtenerTaxi(1));
             out.println("</body>");
             out.println("</html>");

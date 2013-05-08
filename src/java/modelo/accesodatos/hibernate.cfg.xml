@@ -7,8 +7,5 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/sdt?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">software</property>
-    <mapping resource="modelo/accesodatos/Solicitud.hbm.xml"/>
-    <mapping resource="modelo/accesodatos/Taxi.hbm.xml"/>
-    <mapping resource="modelo/accesodatos/hibernate.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

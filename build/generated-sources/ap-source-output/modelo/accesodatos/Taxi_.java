@@ -6,7 +6,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import modelo.accesodatos.Solicitud;
 
-@Generated(value="EclipseLink-2.3.2.v20111125-r10461", date="2013-05-07T20:19:22")
+@Generated(value="EclipseLink-2.3.2.v20111125-r10461", date="2013-05-07T18:16:44")
 @StaticMetamodel(Taxi.class)
 public class Taxi_ { 
 
