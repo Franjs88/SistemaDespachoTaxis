@@ -1,6 +1,8 @@
 package modelo.logicanegocio;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -39,7 +41,9 @@ public class FachadaDeSesion implements InterfazFachadaRemota {
 
     @Override
     public Integer insertarSolicitud(String nombre, String direccion, String telefono) {
-        Solicitud solicitud = new Solicitud(nombre, direccion, telefono, System.currentTimeMillis());
+        Date fecha = new Date();
+        Solicitud solicitud = new Solicitud(nombre, direccion, telefono, fecha.toString());
+        solicitud.setTaxiNumBastidor(null);
         //obtenemos el id del taxi que hara el servicio y asignamos su id ala solicitud
         //solicitud.setIdSolicitud(obtenerTaxi(solicitud.getIdSolicitud()));
         solicitud.setIdSolicitud(123);

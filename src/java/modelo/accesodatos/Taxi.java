@@ -3,10 +3,8 @@ package modelo.accesodatos;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -41,16 +39,20 @@ public class Taxi implements Serializable {
     @NotNull
     @Column(name = "NumBastidor")
     private Integer numBastidor;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "estado")
     private String estado;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "ubicacion")
     private String ubicacion;
     @Size(max = 45)
     @Column(name = "destino")
     private String destino;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taxiNumBastidor")
+    @OneToMany(mappedBy = "taxiNumBastidor")
     private Collection<Solicitud> solicitudCollection;
 
     public Taxi() {
@@ -58,6 +60,12 @@ public class Taxi implements Serializable {
 
     public Taxi(Integer numBastidor) {
         this.numBastidor = numBastidor;
+    }
+
+    public Taxi(Integer numBastidor, String estado, String ubicacion) {
+        this.numBastidor = numBastidor;
+        this.estado = estado;
+        this.ubicacion = ubicacion;
     }
 
     public Integer getNumBastidor() {
@@ -123,7 +131,7 @@ public class Taxi implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Taxi[ numBastidor=" + numBastidor + " ]";
+        return "modelo.accesodatos.Taxi[ numBastidor=" + numBastidor + " ]";
     }
     
 }

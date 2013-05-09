@@ -5,7 +5,7 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import modelo.accesodatos.Taxi;
 
-@Generated(value="EclipseLink-2.3.2.v20111125-r10461", date="2013-05-09T13:22:26")
+@Generated(value="EclipseLink-2.3.2.v20111125-r10461", date="2013-05-09T16:54:06")
 @StaticMetamodel(Solicitud.class)
 public class Solicitud_ { 
 
@@ -14,6 +14,6 @@ public class Solicitud_ {
     public static volatile SingularAttribute<Solicitud, Taxi> taxiNumBastidor;
     public static volatile SingularAttribute<Solicitud, String> telefono;
     public static volatile SingularAttribute<Solicitud, String> nombreCliente;
-    public static volatile SingularAttribute<Solicitud, Long> fechaSolicitud;
+    public static volatile SingularAttribute<Solicitud, String> fechaSolicitud;
 
 }

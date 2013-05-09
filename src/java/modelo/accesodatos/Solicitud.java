@@ -2,7 +2,6 @@ package modelo.accesodatos;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,21 +38,28 @@ public class Solicitud implements Serializable {
     @GeneratedValue
     @Column(name = "idSolicitud")
     private Integer idSolicitud;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "nombreCliente")
     private String nombreCliente;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "fechaSolicitud")
-    private Long fechaSolicitud;
-    @Size(max = 45)
+    private String fechaSolicitud;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "direccionDestino")
     private String direccionDestino;
-    @Size(max = 45)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "telefono")
     private String telefono;
     @JoinColumn(name = "Taxi_NumBastidor", referencedColumnName = "NumBastidor")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @ManyToOne
     private Taxi taxiNumBastidor;
 
     public Solicitud() {
@@ -64,13 +69,13 @@ public class Solicitud implements Serializable {
         this.idSolicitud = idSolicitud;
     }
 
-    public Solicitud(String nombreCliente, String direccionDestino, String telefono, long fechaSolicitud) {
+    public Solicitud(String nombreCliente, String direccionDestino, String telefono, String fechaSolicitud) {
         this.nombreCliente = nombreCliente;
+        this.fechaSolicitud = fechaSolicitud;
         this.direccionDestino = direccionDestino;
         this.telefono = telefono;
-        this.fechaSolicitud = fechaSolicitud;
     }
-    
+
     public Integer getIdSolicitud() {
         return idSolicitud;
     }
@@ -87,11 +92,11 @@ public class Solicitud implements Serializable {
         this.nombreCliente = nombreCliente;
     }
 
-    public long getFechaSolicitud() {
+    public String getFechaSolicitud() {
         return fechaSolicitud;
     }
 
-    public void setFechaSolicitud(long fechaSolicitud) {
+    public void setFechaSolicitud(String fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
 
@@ -141,7 +146,7 @@ public class Solicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Solicitud[ idSolicitud=" + idSolicitud + " ]";
+        return "modelo.accesodatos.Solicitud[ idSolicitud=" + idSolicitud + " ]";
     }
     
 }
