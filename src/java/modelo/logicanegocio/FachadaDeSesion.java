@@ -40,7 +40,9 @@ public class FachadaDeSesion implements InterfazFachadaRemota {
     @Override
     public Integer insertarSolicitud(String nombre, String direccion, String telefono) {
         Solicitud solicitud = new Solicitud(nombre, direccion, telefono, System.currentTimeMillis());
-        //solicitud.setIdSolicitud(2);
+        //obtenemos el id del taxi que hara el servicio y asignamos su id ala solicitud
+        //solicitud.setIdSolicitud(obtenerTaxi(solicitud.getIdSolicitud()));
+        solicitud.setIdSolicitud(123);
         em.persist(solicitud);
         return solicitud.getIdSolicitud();
     }

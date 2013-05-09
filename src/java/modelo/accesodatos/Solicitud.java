@@ -2,13 +2,16 @@ package modelo.accesodatos;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,6 +37,7 @@ public class Solicitud implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue
     @Column(name = "idSolicitud")
     private Integer idSolicitud;
     @Size(max = 45)
@@ -49,7 +53,8 @@ public class Solicitud implements Serializable {
     @Column(name = "telefono")
     private String telefono;
     @JoinColumn(name = "Taxi_NumBastidor", referencedColumnName = "NumBastidor")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Taxi taxiNumBastidor;
 
     public Solicitud() {
