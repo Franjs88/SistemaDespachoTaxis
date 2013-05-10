@@ -42,10 +42,10 @@ public class ControladorServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet TestServlet at " + request.getContextPath() + "</h1>");
-            out.println(ejb.consultaListaTaxis());
-            out.println(ejb.consultaEstadoTaxi(123));
-            out.println(ejb.consultaInfoTaxi(123).getUbicacion());
-            out.println(ejb.consultaInfoTaxi(123).getDestino());
+            //out.println(ejb.consultaListaTaxis());
+            //out.println(ejb.consultaEstadoTaxi(123));
+            //out.println(ejb.consultaInfoTaxi(123).getUbicacion());
+            //out.println(ejb.consultaInfoTaxi(123).getDestino());
             out.println(ejb.obtenerTaxi(1));
             out.println(ejb.insertarSolicitud("pepe", "parla", "345"));
             out.println("</body>");
