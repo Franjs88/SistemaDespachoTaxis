@@ -15,15 +15,9 @@ public interface InterfazFachadaRemota {
     
     public Taxi consultaInfoTaxi(Integer idTaxi);
     
-    /**
-     *
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     */
     public Integer insertarSolicitud(String nombre, String direccion, String telefono);
     
-    public Integer obtenerTaxi(Integer idSolicitud);
+    public Integer obtenerTaxi();
     
     public boolean enviarMensaje(Integer idSolicitud, Integer idTaxi);
     

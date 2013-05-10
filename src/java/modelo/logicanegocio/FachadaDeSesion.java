@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
@@ -16,50 +15,36 @@ import modelo.accesodatos.Taxi;
  * @author Grupo 4
  */
 @Stateless
-public class FachadaDeSesion {//implements InterfazFachadaRemota {
+public class FachadaDeSesion {
 
     @PersistenceContext
     EntityManager em;
-
-    //@Override
     public List<Integer> consultaListaTaxis() {
-        //Devuelve la lista de identidicadores de los taxis de la BBDD
+        //Devuelve la lista de identificadores de los taxis de la BBDD
         return (List<Integer>) em.createNamedQuery("Taxi.findAllByNumBastidor").getResultList();
     }
-
-    //@Override
+    
     public String consultaEstadoTaxi(Integer idTaxi) {
         //Devuelve el estado del taxi
         return (String) em.createNamedQuery("Taxi.findEstadoByNumBastidor").
                 setParameter("numBastidor", idTaxi).getSingleResult();
     }
 
-    //@Override
     public Taxi consultaInfoTaxi(Integer idTaxi) {
         //Devuelve el taxi con la información de estado, ubicacion y destino
         return (Taxi) em.createNamedQuery("Taxi.findByNumBastidor").
                 setParameter("numBastidor", idTaxi).getSingleResult();
     }
 
-    //@Override
     public Integer insertarSolicitud(String nombre, String direccion, String telefono) {
         //Inserta la solicitud en la BBDD
         Date fecha = new Date();
         Solicitud solicitud = new Solicitud(nombre, direccion, telefono, fecha.toString());
-       // solicitud.setIdSolicitud(1);
-        
-        //solicitud.setTaxiNumBastidor(null);
-        //obtenemos el id del taxi que hara el servicio y asignamos su id ala solicitud
-        //solicitud.setIdSolicitud(obtenerTaxi(solicitud.getIdSolicitud()));
-        //solicitud.setIdSolicitud(123);
-        //em.lock(solicitud, LockModeType.NONE);
-        List list = em.createNamedQuery("Solicitud.findAll").getResultList();
         em.persist(solicitud);
         return solicitud.getIdSolicitud();
     }
 
-    //@Override
-    public Integer obtenerTaxi(Integer idSolicitud) {
+    public Integer obtenerTaxi() {
 
         //Obtiene los taxis que han atendido alguna solicitud
         List<Taxi> listaSolicitudes = em.createNamedQuery("Solicitud.findTaxis").getResultList();
@@ -126,7 +111,6 @@ public class FachadaDeSesion {//implements InterfazFachadaRemota {
         return taxiCandidato;
     }
 
-    //@Override
     public boolean enviarMensaje(Integer idSolicitud, Integer idTaxi) {
         //Envia un mensaje al taxi indicado con la solicitud asignada
 

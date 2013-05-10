@@ -26,6 +26,7 @@ public class FachadaDeSesionTest {
         ejbContainer = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         System.out.println("Starting the container");
         ctx = ejbContainer.getContext();
+        //org.objectweb.asm.ClassReader
     }
     
     @AfterClass
